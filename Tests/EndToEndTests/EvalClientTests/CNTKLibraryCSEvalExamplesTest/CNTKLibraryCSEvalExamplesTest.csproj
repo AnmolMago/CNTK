@@ -56,6 +56,13 @@
     <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    
+    <!-- This is necessary to let MSBuild know about dependencies, as MSBuild doesn't leverage the Visual Studio solution file for dependency information  anymore. Without this, we are seeing race conditions during the build
+         on some machines, as these files are being built before Cntk.Core.Managed.Standard-$(CntkComponentVersion).
+    -->
+    <ProjectReference Include="..\..\..\..\bindings\csharp\CNTKLibraryManagedDll-Standard\CNTKLibraryManagedDll-Standard.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\..\Examples\Evaluation\CNTKLibraryCSEvalCPUOnlyExamples\CNTKExtensions.cs">

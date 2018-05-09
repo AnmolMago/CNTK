@@ -45,6 +45,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    
+    <!-- This is necessary to let MSBuild know about dependencies, as MSBuild doesn't leverage the Visual Studio solution file for dependency information  anymore. Without this, we are seeing race conditions during the build
+         on some machines, as these files are being built before Cntk.Core.Managed.Standard-$(CntkComponentVersion).
+    -->
+    <ProjectReference Include="..\..\..\bindings\csharp\CNTKLibraryManagedDll-Standard\CNTKLibraryManagedDll-Standard.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Evaluation\ImageExtension\CNTKImageProcessing.cs">
